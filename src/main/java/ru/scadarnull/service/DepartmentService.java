@@ -3,9 +3,8 @@ package ru.scadarnull.service;
 import ru.scadarnull.entity.Department;
 import ru.scadarnull.entity.Employee;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 public class DepartmentService {
     private static DepartmentService departmentService;
@@ -49,4 +48,25 @@ public class DepartmentService {
     public Set<Department> getDepartments() {
         return departments;
     }
+
+    public void checkEmployeeTransfer(){
+        for(Department department : departments){
+            for(Employee employee : department.getEmployees()){
+                if(employee.getSalary().compareTo(department.getAvgSalaryOfEmployees()) <= 0 && department.getEmployees().size() > 1){
+                    transferEmployee(employee);
+                }
+            }
+        }
+    }
+
+    private void transferEmployee(Employee employee) {
+        for(Department department : departments){
+            if(department.getAvgSalaryOfEmployees().compareTo(employee.getSalary()) <= 0 && !employee.getDepartment().getName().equals(department.getName())){
+                System.out.println("Сотрудника " + employee.getFullName() +
+                        " можно перевести из отдела " + employee.getDepartment().getName() +
+                        " в отдел " + department.getName());
+            }
+        }
+    }
+
 }

@@ -29,5 +29,7 @@ public class App
         for(Department department : DepartmentService.getInstance().getDepartments()){
             System.out.println(department.getName() + " = " + department.getAvgSalaryOfEmployees());
         }
+
+        departmentService.checkEmployeeTransfer();
     }
 }
