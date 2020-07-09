@@ -1,11 +1,9 @@
 package ru.scadarnull;
 
-import ru.scadarnull.entity.Department;
-import ru.scadarnull.entity.Employee;
+import ru.scadarnull.service.DepartmentService;
+import ru.scadarnull.service.EmployeeService;
 
-import java.io.*;
-
-public class App 
+public class App
 {
     public static void main( String[] args )
     {
@@ -14,14 +12,17 @@ public class App
 //        Employee e3 = new Employee(3, "Roman roman", 30500, Department.HR);
 //        Employee e4 = new Employee(4, "Vasya vasya", 50000, Department.HR);
 
-        ListOfEmployee listOfEmployee = new ListOfEmployee();
+        String inputFile = args[0];
+        String outputFile = args[1];
+        DepartmentService departmentService = DepartmentService.getInstance();
+        EmployeeService listOfEmployee = new EmployeeService(inputFile, outputFile);
 //        listOfEmployee.add(e1);
 //        listOfEmployee.add(e2);
 //        listOfEmployee.add(e3);
 //        listOfEmployee.add(e4);
 
-        listOfEmployee.readFromFile();
-
-        listOfEmployee.print();
+        if(listOfEmployee.readFromFile()){
+            listOfEmployee.print();
+        }
     }
 }
