@@ -38,4 +38,16 @@ public class Employee{
     public Department getDepartment() {
         return department;
     }
+
+    public BigDecimal getSalary() {
+        return salary;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
 }

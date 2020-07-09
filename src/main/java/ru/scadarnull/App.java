@@ -1,5 +1,6 @@
 package ru.scadarnull;
 
+import ru.scadarnull.entity.Department;
 import ru.scadarnull.service.DepartmentService;
 import ru.scadarnull.service.EmployeeService;
 
@@ -23,6 +24,10 @@ public class App
 
         if(listOfEmployee.readFromFile()){
             listOfEmployee.print();
+        }
+
+        for(Department department : DepartmentService.getInstance().getDepartments()){
+            System.out.println(department.getName() + " = " + department.getAvgSalaryOfEmployees());
         }
     }
 }
