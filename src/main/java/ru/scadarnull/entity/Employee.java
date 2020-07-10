@@ -4,13 +4,11 @@ import java.math.BigDecimal;
 
 public class Employee{
 
-    private Integer id;
     private String fullName;
     private BigDecimal salary;
     private Department department;
 
-    public Employee(Integer id, String fullName, BigDecimal salary, Department department) {
-        this.id = id;
+    public Employee(String fullName, BigDecimal salary, Department department) {
         this.fullName = fullName;
         this.salary = salary;
         this.department = department;
@@ -20,8 +18,7 @@ public class Employee{
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
+                "fullName='" + fullName + '\'' +
                 ", salary=" + salary +
                 ", department=" + department +
                 '}';
@@ -29,7 +26,6 @@ public class Employee{
 
     public String toStringForFile() {
         return
-                id.toString() + ',' +
                 fullName + ',' +
                 salary.toString() + ',' +
                 department.toString() + '\n';
@@ -41,10 +37,6 @@ public class Employee{
 
     public BigDecimal getSalary() {
         return salary;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getFullName() {

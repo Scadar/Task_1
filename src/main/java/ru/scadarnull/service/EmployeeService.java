@@ -74,12 +74,11 @@ public class EmployeeService {
         if(checkEmployeeValid(fullInfo)){
 
             DepartmentService departmentService = DepartmentService.getInstance();
-            Department department = departmentService.getDepartment(fullInfo[3]);
+            Department department = departmentService.getDepartment(fullInfo[2]);
 
             Employee employee = new Employee(
-                    Integer.valueOf(fullInfo[0]),
-                    fullInfo[1],
-                    new BigDecimal(fullInfo[2]),
+                    fullInfo[0],
+                    new BigDecimal(fullInfo[1]),
                     department);
 
             departmentService.addEmployeeToDepartment(employee);
@@ -93,15 +92,14 @@ public class EmployeeService {
     private boolean checkEmployeeValid(String[] fullInfo) {
         try{
             if(
-                    fullInfo.length != 4 ||
-                    fullInfo[1].trim().length() == 0 ||
-                    fullInfo[3].trim().length() == 0
+                    fullInfo.length != 3 ||
+                    fullInfo[0].trim().length() == 0 ||
+                    fullInfo[2].trim().length() == 0
             ){
                 return false;
             }
 
-            Integer.parseInt(fullInfo[0]);
-            new BigDecimal(fullInfo[2]);
+            new BigDecimal(fullInfo[1]);
 
         }catch (NumberFormatException | NullPointerException nfe){
             return false;

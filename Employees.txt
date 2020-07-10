@@ -1,8 +1,8 @@
-1,Ivan ivan,30000,IT
-2,Ira ira,32000,FINANCE
-3,Roman roman,30500,HR
-4,Vasya vasya,50000,HR
-1,Ivan ivan,30000,IT
-2,Ira ira,32000q,FINANCE
-3,Roman roman,30500,HR
-4,Vasya vasya,50000.00001,HR
+Ivan ivan,30000,IT
+Ira ira,32000,FINANCE
+Roman roman,30500,HR
+Vasya vasya,50000,HR
+Ivan2 ivan,30000,IT
+Ira2 ira,32000,FINANCE
+Roman2 roman,30500,HR
+Vasya2 vasya,50000.00001,HR
