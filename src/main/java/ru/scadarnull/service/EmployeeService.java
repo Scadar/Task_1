@@ -23,10 +23,6 @@ public class EmployeeService {
         employees.add(employee);
     }
 
-    public void remove(Employee employee){
-        employees.remove(employee);
-    }
-
     public boolean saveToFile(){
 
         try(FileWriter writer = new FileWriter(inputFile, true))
@@ -50,9 +46,9 @@ public class EmployeeService {
         try(BufferedReader reader = new BufferedReader(new FileReader(inputFile)))
         {
             String line = reader.readLine();
-            int countOfEmployee = 1;
+            int employeeLine = 1;
             while (line != null) {
-                saveEmployeeFromFile(line, countOfEmployee++);
+                readEmployeeFromFile(line, employeeLine++);
                 line = reader.readLine();
             }
         }
@@ -73,7 +69,7 @@ public class EmployeeService {
         return true;
     }
 
-    private void saveEmployeeFromFile(String line, int countOfEmployee) {
+    private void readEmployeeFromFile(String line, int countOfEmployee) {
         String[] fullInfo = line.split(",");
         if(checkEmployeeValid(fullInfo)){
 
@@ -84,7 +80,7 @@ public class EmployeeService {
                     DepartmentService.getInstance().getDepartment(fullInfo[3]));
 
             DepartmentService.getInstance().addEmployeeToDepartment(employee);
-            employees.add(employee);
+            add(employee);
         }else{
             System.out.println("Ошибка при чтении сотрудника в строке = " + countOfEmployee + " (" + inputFile + ")");
         }

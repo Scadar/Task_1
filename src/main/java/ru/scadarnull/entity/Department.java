@@ -1,6 +1,7 @@
 package ru.scadarnull.entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -52,6 +53,6 @@ public class Department{
         for(Employee e : employees){
             sum = sum.add(e.getSalary());
         }
-        return sum.divide(BigDecimal.valueOf(employees.size()));
+        return sum.divide(BigDecimal.valueOf(employees.size()), 2, RoundingMode.HALF_UP);
     }
 }

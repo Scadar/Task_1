@@ -42,7 +42,7 @@ public class DepartmentService {
     }
 
     public void addEmployeeToDepartment(Employee employee){
-        Objects.requireNonNull(getDepartmentByName(employee.getDepartment().getName())).addEmployee(employee);
+        getDepartmentByName(employee.getDepartment().getName()).addEmployee(employee);
     }
 
     public Set<Department> getDepartments() {
