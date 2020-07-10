@@ -8,10 +8,10 @@ import java.util.*;
 
 public class DepartmentService {
     private static DepartmentService departmentService;
-    private Set<Department> departments;
+    private Map<String, Department> departments;
 
     private DepartmentService() {
-        departments = new HashSet<>();
+        departments = new HashMap<>();
     }
 
     public static DepartmentService getInstance(){
@@ -23,34 +23,24 @@ public class DepartmentService {
 
     public Department getDepartment(String departmentName){
         //Если отдел существует,то вернуть его, если нет, то создать новый(Как лучше назвать метод?)
-        Department department = getDepartmentByName(departmentName);
+        Department department = departments.get(departmentName);
         if(department == null){
             department = new Department(departmentName);
-            departments.add(department);
+            departments.put(departmentName, department);
         }
         return department;
     }
 
-
-    private Department getDepartmentByName(String departmentName) {
-        for(Department d : departments){
-            if(d.getName().equalsIgnoreCase(departmentName)){
-                return d;
-            }
-        }
-        return null;
-    }
-
     public void addEmployeeToDepartment(Employee employee){
-        getDepartmentByName(employee.getDepartment().getName()).addEmployee(employee);
+        departments.get(employee.getDepartment().getName()).addEmployee(employee);
     }
 
-    public Set<Department> getDepartments() {
-        return departments;
+    public List<Department> getDepartments() {
+        return new ArrayList<>(departments.values());
     }
 
     public void checkEmployeeTransfer(){
-        for(Department department : departments){
+        for(Department department : getDepartments()){
             for(Employee employee : department.getEmployees()){
                 if(employee.getSalary().compareTo(department.getAvgSalaryOfEmployees()) <= 0 && department.getEmployees().size() > 1){
                     transferEmployee(employee);
@@ -60,7 +50,7 @@ public class DepartmentService {
     }
 
     private void transferEmployee(Employee employee) {
-        for(Department department : departments){
+        for(Department department : getDepartments()){
             if(!employee.getDepartment().getName().equals(department.getName()) && department.getAvgSalaryOfEmployees().compareTo(employee.getSalary()) <= 0){
                 System.out.println("Сотрудника " + employee.getFullName() +
                         " можно перевести из отдела " + employee.getDepartment().getName() +
