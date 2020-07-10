@@ -61,7 +61,7 @@ public class DepartmentService {
 
     private void transferEmployee(Employee employee) {
         for(Department department : departments){
-            if(department.getAvgSalaryOfEmployees().compareTo(employee.getSalary()) <= 0 && !employee.getDepartment().getName().equals(department.getName())){
+            if(!employee.getDepartment().getName().equals(department.getName()) && department.getAvgSalaryOfEmployees().compareTo(employee.getSalary()) <= 0){
                 System.out.println("Сотрудника " + employee.getFullName() +
                         " можно перевести из отдела " + employee.getDepartment().getName() +
                         " в отдел " + department.getName());

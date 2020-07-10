@@ -69,20 +69,23 @@ public class EmployeeService {
         return true;
     }
 
-    private void readEmployeeFromFile(String line, int countOfEmployee) {
+    private void readEmployeeFromFile(String line, int employeeLine) {
         String[] fullInfo = line.split(",");
         if(checkEmployeeValid(fullInfo)){
+
+            DepartmentService departmentService = DepartmentService.getInstance();
+            Department department = departmentService.getDepartment(fullInfo[3]);
 
             Employee employee = new Employee(
                     Integer.valueOf(fullInfo[0]),
                     fullInfo[1],
                     new BigDecimal(fullInfo[2]),
-                    DepartmentService.getInstance().getDepartment(fullInfo[3]));
+                    department);
 
-            DepartmentService.getInstance().addEmployeeToDepartment(employee);
+            departmentService.addEmployeeToDepartment(employee);
             add(employee);
         }else{
-            System.out.println("Ошибка при чтении сотрудника в строке = " + countOfEmployee + " (" + inputFile + ")");
+            System.out.println("Ошибка при чтении сотрудника в строке = " + employeeLine + " (" + inputFile + ")");
         }
 
     }
@@ -98,7 +101,7 @@ public class EmployeeService {
             }
 
             Integer.parseInt(fullInfo[0]);
-            Double.parseDouble(fullInfo[2]); //Как проверить на BigDecimal?
+            new BigDecimal(fullInfo[2]);
 
         }catch (NumberFormatException | NullPointerException nfe){
             return false;

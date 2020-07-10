@@ -15,10 +15,10 @@ public class App
             String outputFile = args[1];
 
             DepartmentService departmentService = DepartmentService.getInstance();
-            EmployeeService listOfEmployee = new EmployeeService(inputFile, outputFile);
+            EmployeeService employeeService = new EmployeeService(inputFile, outputFile);
 
-            if(listOfEmployee.readFromFile()){
-                listOfEmployee.print();
+            if(employeeService.readFromFile()){
+                employeeService.print();
             }else{
                 System.out.println("Файл для чтения не найден");
             }
