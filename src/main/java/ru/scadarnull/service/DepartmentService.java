@@ -7,18 +7,24 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class DepartmentService {
-    private static DepartmentService departmentService;
+    private static volatile DepartmentService departmentService;
     private Map<String, Department> departments;
 
     private DepartmentService() {
         departments = new HashMap<>();
     }
 
-    public static DepartmentService getInstance(){
-        if(departmentService == null){
-            departmentService = new DepartmentService();
+    public static DepartmentService getInstance() {
+        DepartmentService localInstance = departmentService;
+        if (localInstance == null) {
+            synchronized (DepartmentService.class) {
+                localInstance = departmentService;
+                if (localInstance == null) {
+                    departmentService = localInstance = new DepartmentService();
+                }
+            }
         }
-        return departmentService;
+        return localInstance;
     }
 
     public Department getDepartment(String departmentName){
