@@ -23,7 +23,7 @@ public class App
                 System.out.println("Файл для чтения не найден");
             }
 
-            for(Department department : DepartmentService.getInstance().getDepartments()){
+            for(Department department : departmentService.getDepartments()){
                 System.out.println(department.getName() + " = " + department.getAvgSalaryOfEmployees());
             }
 

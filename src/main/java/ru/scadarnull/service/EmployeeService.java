@@ -14,7 +14,7 @@ public class EmployeeService {
     private List<Employee> employees;
 
     public EmployeeService(String inputFile, String outputFile) {
-        employees = new ArrayList<>();
+        this.employees = new ArrayList<>();
         this.inputFile = inputFile;
         this.outputFile = outputFile;
     }

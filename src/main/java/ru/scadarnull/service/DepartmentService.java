@@ -41,8 +41,8 @@ public class DepartmentService {
         departments.get(employee.getDepartment().getName()).addEmployee(employee);
     }
 
-    public List<Department> getDepartments() {
-        return new ArrayList<>(departments.values());
+    public Set<Department> getDepartments() {
+        return new HashSet<>(departments.values());
     }
 
     public void checkEmployeeTransfer(){
