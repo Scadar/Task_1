@@ -1,6 +1,7 @@
 package ru.scadarnull.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Employee{
 
@@ -42,4 +43,5 @@ public class Employee{
     public String getFullName() {
         return fullName;
     }
+
 }

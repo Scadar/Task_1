@@ -65,4 +65,29 @@ public class DepartmentService {
         }
     }
 
+    public void multiCheckEmployeeTransfer(){
+        for(Department department : getDepartments()){
+            Map<BigDecimal, List<Employee>> groups = department.getGroupsReadyToTransfer();
+            for(Map.Entry<BigDecimal, List<Employee>> group : groups.entrySet()){
+                multiTransferEmployee(group, department);
+            }
+        }
+    }
+
+    private void multiTransferEmployee(Map.Entry<BigDecimal, List<Employee>> group, Department currentDepartment) {
+        for(Department department : getDepartments()){
+            if(!department.getName().equals(currentDepartment.getName()) &&
+                department.getAvgSalaryOfEmployees().compareTo(group.getKey()) < 0)
+            {
+                System.out.println("Сотрудников {");
+                for(Employee employee : group.getValue()){
+                    System.out.println(employee.getFullName());
+                }
+                System.out.println("}\nСреднее "+ group.getKey());
+                System.out.println("Можно перевести из отдела " + currentDepartment.getName() + " (avg =" + currentDepartment.getAvgSalaryOfEmployees() + ") " +
+                " в отдел " + department.getName() + " (avg =" + department.getAvgSalaryOfEmployees() + ")\n\n");
+            }
+        }
+    }
+
 }
