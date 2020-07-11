@@ -27,7 +27,7 @@ public class App
                 System.out.println(department.getName() + " = " + department.getAvgSalaryOfEmployees());
             }
 
-            departmentService.multiCheckEmployeeTransfer();
+            departmentService.groupCheckEmployeeTransfer();
             departmentService.checkEmployeeTransfer();
         }
 

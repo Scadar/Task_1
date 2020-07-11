@@ -66,16 +66,16 @@ public class DepartmentService {
         }
     }
 
-    public void multiCheckEmployeeTransfer(){
+    public void groupCheckEmployeeTransfer(){
         for(Department department : getDepartments()){
             List<List<Employee>> groups = department.getGroupsReadyToTransfer();
             for(List<Employee> group : groups){
-                multiTransferEmployee(group, department);
+                groupTransferEmployee(group, department);
             }
         }
     }
 
-    private void multiTransferEmployee(List<Employee> group, Department currentDepartment) {
+    private void groupTransferEmployee(List<Employee> group, Department currentDepartment) {
         for(Department department : getDepartments()){
             if(!department.getName().equals(currentDepartment.getName()) &&
                 department.getAvgSalaryOfEmployees().compareTo(avgOfGroup(group)) < 0)
@@ -84,9 +84,10 @@ public class DepartmentService {
                 for(Employee employee : group){
                     System.out.println(employee.getFullName());
                 }
-                System.out.println("}\nСреднее "+ avgOfGroup(group));
-                System.out.println("Можно перевести из отдела " + currentDepartment.getName() + " (avg =" + currentDepartment.getAvgSalaryOfEmployees() + ") " +
-                " в отдел " + department.getName() + " (avg =" + department.getAvgSalaryOfEmployees() + ")\n\n");
+                System.out.println("}\nСредняя зп = "+ avgOfGroup(group) + "\n" +
+                "Можно перевести из отдела " + currentDepartment.getName() +
+                " (avg =" + currentDepartment.getAvgSalaryOfEmployees() + ") " +
+                " в отдел " + department.getName() + " (avg =" + department.getAvgSalaryOfEmployees() + ")\n");
             }
         }
     }
