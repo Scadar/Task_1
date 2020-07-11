@@ -4,6 +4,7 @@ import ru.scadarnull.entity.Department;
 import ru.scadarnull.entity.Employee;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 public class DepartmentService {
@@ -67,27 +68,34 @@ public class DepartmentService {
 
     public void multiCheckEmployeeTransfer(){
         for(Department department : getDepartments()){
-            Map<BigDecimal, List<Employee>> groups = department.getGroupsReadyToTransfer();
-            for(Map.Entry<BigDecimal, List<Employee>> group : groups.entrySet()){
+            List<List<Employee>> groups = department.getGroupsReadyToTransfer();
+            for(List<Employee> group : groups){
                 multiTransferEmployee(group, department);
             }
         }
     }
 
-    private void multiTransferEmployee(Map.Entry<BigDecimal, List<Employee>> group, Department currentDepartment) {
+    private void multiTransferEmployee(List<Employee> group, Department currentDepartment) {
         for(Department department : getDepartments()){
             if(!department.getName().equals(currentDepartment.getName()) &&
-                department.getAvgSalaryOfEmployees().compareTo(group.getKey()) < 0)
+                department.getAvgSalaryOfEmployees().compareTo(avgOfGroup(group)) < 0)
             {
                 System.out.println("Сотрудников {");
-                for(Employee employee : group.getValue()){
+                for(Employee employee : group){
                     System.out.println(employee.getFullName());
                 }
-                System.out.println("}\nСреднее "+ group.getKey());
+                System.out.println("}\nСреднее "+ avgOfGroup(group));
                 System.out.println("Можно перевести из отдела " + currentDepartment.getName() + " (avg =" + currentDepartment.getAvgSalaryOfEmployees() + ") " +
                 " в отдел " + department.getName() + " (avg =" + department.getAvgSalaryOfEmployees() + ")\n\n");
             }
         }
     }
 
+    private BigDecimal avgOfGroup(List<Employee> group){
+        BigDecimal sum = new BigDecimal(0);
+        for(Employee e : group){
+            sum = sum.add(e.getSalary());
+        }
+        return sum.divide(BigDecimal.valueOf(group.size()), 2, RoundingMode.HALF_UP);
+    }
 }

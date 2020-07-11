@@ -38,8 +38,8 @@ public class Department{
         return getAvgOfGroups(new ArrayList<>(employees));
     }
 
-    public Map<BigDecimal, List<Employee>> getGroupsReadyToTransfer(){
-        Map<BigDecimal, List<Employee>> groupsReadyToTransfer = new LinkedHashMap<>();
+    public List<List<Employee>> getGroupsReadyToTransfer(){
+        List<List<Employee>> groupsReadyToTransfer = new ArrayList<>();
 
         for(int k = 1; k < employees.size(); ++k){
             combination(new ArrayList<>(employees), k, 0, new ArrayList<>(Arrays.asList(new Employee[k])), groupsReadyToTransfer);
@@ -53,11 +53,11 @@ public class Department{
             int length,
             int startPosition,
             List<Employee> result,
-            Map<BigDecimal, List<Employee>> groupsReadyToTransfer)
+            List<List<Employee>> groupsReadyToTransfer)
     {
         if (length == 0) {
             if(getAvgOfGroups(result).compareTo(getAvgSalaryOfEmployees()) <= 0){
-                groupsReadyToTransfer.put(getAvgOfGroups(result), result);
+                groupsReadyToTransfer.add(new ArrayList<>(result));
             }
         } else {
             for (int i = startPosition; i <= array.size() - length; i++) {
@@ -73,18 +73,5 @@ public class Department{
             sum = sum.add(e.getSalary());
         }
         return sum.divide(BigDecimal.valueOf(group.size()), 2, RoundingMode.HALF_UP);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Department that = (Department) o;
-        return Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }
