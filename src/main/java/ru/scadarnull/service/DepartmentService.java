@@ -66,28 +66,39 @@ public class DepartmentService {
         }
     }
 
-    public void groupCheckEmployeeTransfer(){
+    public String groupCheckEmployeeTransfer(){
+        StringBuilder result = new StringBuilder();
         for(Department department : getDepartments()){
             List<List<Employee>> groups = department.getGroupsReadyToTransfer();
             for(List<Employee> group : groups){
-                groupTransferEmployee(group, department);
+                groupTransferEmployee(group, department, result);
             }
         }
+        return result.toString();
     }
 
-    private void groupTransferEmployee(List<Employee> group, Department currentDepartment) {
+    private void groupTransferEmployee(List<Employee> group, Department currentDepartment, StringBuilder result) {
+
         for(Department department : getDepartments()){
             if(!department.getName().equals(currentDepartment.getName()) &&
                 department.getAvgSalaryOfEmployees().compareTo(avgOfGroup(group)) < 0)
             {
-                System.out.println("Сотрудников {");
+                result.append("Сотрудников {\n");
                 for(Employee employee : group){
-                    System.out.println(employee.getFullName());
+                    result.append(employee.getFullName()).append("\n");
                 }
-                System.out.println("}\nСредняя зп = "+ avgOfGroup(group) + "\n" +
-                "Можно перевести из отдела " + currentDepartment.getName() +
-                " (avg =" + currentDepartment.getAvgSalaryOfEmployees() + ") " +
-                " в отдел " + department.getName() + " (avg =" + department.getAvgSalaryOfEmployees() + ")\n");
+                result.append("}\nСредняя зп = ")
+                        .append(avgOfGroup(group))
+                        .append("\n")
+                        .append("Можно перевести из отдела ")
+                        .append(currentDepartment.getName())
+                        .append(" (avg = ")
+                        .append(currentDepartment.getAvgSalaryOfEmployees())
+                        .append(" ) ")
+                        .append(" в отдел ")
+                        .append(department.getName())
+                        .append(" (avg = ")
+                        .append(department.getAvgSalaryOfEmployees()).append(" )\n\n");
             }
         }
     }
@@ -99,4 +110,6 @@ public class DepartmentService {
         }
         return sum.divide(BigDecimal.valueOf(group.size()), 2, RoundingMode.HALF_UP);
     }
+
+
 }

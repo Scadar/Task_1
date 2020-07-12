@@ -113,4 +113,21 @@ public class EmployeeService {
             System.out.println(e);
         }
     }
+
+    public boolean saveGroupsToFile(){
+        try(FileWriter writer = new FileWriter(outputFile, false))
+        {
+            String text = DepartmentService.getInstance().groupCheckEmployeeTransfer();
+            writer.write(text);
+            writer.flush();
+        }
+        catch (FileNotFoundException fileNotFoundException){
+            System.out.println(fileNotFoundException.getMessage());
+            return false;
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+        return true;
+    }
 }

@@ -9,7 +9,7 @@ public class App
     public static void main( String[] args )
     {
         if(args.length < 2){
-            System.out.println("Введены некорректные параметры программы");
+            System.out.println("Введены некорректные параметры программы, нужно ввести входной и выходной файл");
         }else{
             String inputFile = args[0];
             String outputFile = args[1];
@@ -27,8 +27,11 @@ public class App
                 System.out.println(department.getName() + " = " + department.getAvgSalaryOfEmployees());
             }
 
-            departmentService.groupCheckEmployeeTransfer();
-            departmentService.checkEmployeeTransfer();
+            System.out.println(departmentService.groupCheckEmployeeTransfer());
+            if(!employeeService.saveGroupsToFile()){
+                System.out.println("Файл для записи не найден");
+            }
+            //departmentService.checkEmployeeTransfer();
         }
 
     }
