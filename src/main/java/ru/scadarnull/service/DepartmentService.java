@@ -87,21 +87,34 @@ public class DepartmentService {
                 for(Employee employee : group){
                     result.append(employee.getFullName()).append("\n");
                 }
-                result.append("}\nСредняя зп = ")
+                result.append("}\nСредняя зп по группе = ")
                         .append(avgOfGroup(group))
                         .append("\n")
                         .append("Можно перевести из отдела ")
                         .append(currentDepartment.getName())
-                        .append(" (avg = ")
+                        .append(" (avg до = ")
                         .append(currentDepartment.getAvgSalaryOfEmployees())
-                        .append(" ) ")
-                        .append(" в отдел ")
+                        .append(" ) (avg после = ")
+                        .append(avgOfGroup(currentDepartment.getEmployees(), group))
+                        .append(")\nв отдел \n")
                         .append(department.getName())
-                        .append(" (avg = ")
-                        .append(department.getAvgSalaryOfEmployees()).append(" )\n\n");
+                        .append(" (avg до = ")
+                        .append(department.getAvgSalaryOfEmployees()).append(" ) (avg после = ")
+                        .append(department.getAvgSalaryOfEmployees().add(avgOfGroup(group)).divide(BigDecimal.valueOf(2)))
+                        .append(")\n\n");
             }
         }
         return result;
+    }
+
+    private BigDecimal avgOfGroup(List<Employee> group, List<Employee> except){
+        List<Employee> result = new ArrayList<>();
+        for(Employee employee : group){
+            if(!except.contains(employee)){
+                result.add(employee);
+            }
+        }
+        return avgOfGroup(result);
     }
 
     public static BigDecimal avgOfGroup(List<Employee> group){
