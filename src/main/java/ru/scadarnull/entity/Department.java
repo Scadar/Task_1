@@ -44,19 +44,19 @@ public class Department{
         List<List<Employee>> groupsReadyToTransfer = new ArrayList<>();
 
         for(int i = 1; i < employees.size(); ++i){
-            combination(new ArrayList<>(employees), i, 0, new ArrayList<>(Arrays.asList(new Employee[i])), groupsReadyToTransfer);
+            groupsReadyToTransfer.addAll(combination(new ArrayList<>(employees), i, 0, new ArrayList<>(Arrays.asList(new Employee[i]))));
         }
 
         return groupsReadyToTransfer;
     }
 
-    private void combination(
+    private List<List<Employee>> combination(
             List<Employee> array,
             int length,
             int startPosition,
-            List<Employee> result,
-            List<List<Employee>> groupsReadyToTransfer)
+            List<Employee> result)
     {
+        List<List<Employee>> groupsReadyToTransfer = new ArrayList<>();
         if (length == 0) {
             if(DepartmentService.avgOfGroup(result).compareTo(getAvgSalaryOfEmployees()) <= 0){
                 groupsReadyToTransfer.add(new ArrayList<>(result));
@@ -64,9 +64,10 @@ public class Department{
         } else {
             for (int i = startPosition; i <= array.size() - length; i++) {
                 result.set(result.size() - length, array.get(i));
-                combination(array, length - 1, i + 1, result, groupsReadyToTransfer);
+                groupsReadyToTransfer.addAll(combination(array, length - 1, i + 1, result));
             }
         }
+        return groupsReadyToTransfer;
     }
 
 }

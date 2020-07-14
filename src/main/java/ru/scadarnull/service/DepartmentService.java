@@ -71,14 +71,14 @@ public class DepartmentService {
         for(Department department : getDepartments()){
             List<List<Employee>> groups = department.getGroupsReadyToTransfer();
             for(List<Employee> group : groups){
-                groupTransferEmployee(group, department, result);
+                result.append(groupTransferEmployee(group, department));
             }
         }
         return result.toString();
     }
 
-    private void groupTransferEmployee(List<Employee> group, Department currentDepartment, StringBuilder result) {
-
+    private StringBuilder groupTransferEmployee(List<Employee> group, Department currentDepartment) {
+        StringBuilder result = new StringBuilder();
         for(Department department : getDepartments()){
             if(!department.getName().equals(currentDepartment.getName()) &&
                 department.getAvgSalaryOfEmployees().compareTo(avgOfGroup(group)) < 0)
@@ -101,6 +101,7 @@ public class DepartmentService {
                         .append(department.getAvgSalaryOfEmployees()).append(" )\n\n");
             }
         }
+        return result;
     }
 
     public static BigDecimal avgOfGroup(List<Employee> group){
