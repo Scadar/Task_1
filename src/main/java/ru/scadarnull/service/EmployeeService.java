@@ -71,7 +71,8 @@ public class EmployeeService {
 
     private void readEmployeeFromFile(String line, int employeeLine) {
         String[] fullInfo = line.split(",");
-        if(checkEmployeeValid(fullInfo)){
+        List<Status> errorMessages = checkEmployeeValid(fullInfo);
+        if(errorMessages.size() == 0){
 
             DepartmentService departmentService = DepartmentService.getInstance();
             Department department = departmentService.getDepartment(fullInfo[2]);
@@ -84,28 +85,33 @@ public class EmployeeService {
             departmentService.addEmployeeToDepartment(employee);
             add(employee);
         }else{
-            System.out.println("Ошибка при чтении сотрудника в строке = " + employeeLine + " (" + inputFile + ")");
+            System.out.println("Ошибка при чтении сотрудника в строке = " + employeeLine);
+            System.out.println(errorMessages.toString());
         }
 
     }
 
-    private boolean checkEmployeeValid(String[] fullInfo) {
+    private List<Status> checkEmployeeValid(String[] fullInfo) {
+        List<Status> result = new ArrayList<>();
         try{
-            if(
-                    fullInfo.length != 3 ||
-                    fullInfo[0].trim().length() == 0 ||
-                    fullInfo[2].trim().length() == 0
-            ){
-                return false;
+            if(fullInfo.length != 3){
+                result.add(Status.INVALID_NUMBER_OF_ARGS);
+            }else{
+                if(fullInfo[0].trim().length() == 0){
+                    result.add(Status.INVALID_NAME);
+                }
+                if(fullInfo[2].trim().length() == 0){
+                    result.add(Status.INVALID_DEPARTMENT);
+                }
+                BigDecimal salary = new BigDecimal(fullInfo[1]);
+                if(salary.compareTo(BigDecimal.valueOf(0)) <= 0 || salary.scale() > 2){
+                    result.add(Status.INVALID_SALARY);
+                }
             }
-
-            new BigDecimal(fullInfo[1]);
-
         }catch (NumberFormatException | NullPointerException nfe){
-            return false;
+            result.add(Status.INVALID_SALARY);
         }
-
-        return true;
+        return result;
     }
 
     public void print(){
@@ -130,4 +136,11 @@ public class EmployeeService {
         }
         return true;
     }
+}
+
+enum Status{
+    INVALID_NAME,
+    INVALID_SALARY,
+    INVALID_DEPARTMENT,
+    INVALID_NUMBER_OF_ARGS
 }

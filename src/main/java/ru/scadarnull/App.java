@@ -27,7 +27,7 @@ public class App
                 System.out.println(department.getName() + " = " + department.getAvgSalaryOfEmployees());
             }
 
-            System.out.println(departmentService.groupCheckEmployeeTransfer());
+            //System.out.println(departmentService.groupCheckEmployeeTransfer());
             if(!employeeService.saveGroupsToFile()){
                 System.out.println("Файл для записи не найден и не может быть создан");
             }
