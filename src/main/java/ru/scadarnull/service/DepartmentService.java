@@ -100,7 +100,7 @@ public class DepartmentService {
                         .append(department.getName())
                         .append(" (avg до = ")
                         .append(department.getAvgSalaryOfEmployees()).append(" ) (avg после = ")
-                        .append(department.getAvgSalaryOfEmployees().add(avgOfGroup(group)).divide(BigDecimal.valueOf(2)))
+                        .append(department.getAvgSalaryOfEmployees().add(avgOfGroup(group)).divide(BigDecimal.valueOf(2), 2, RoundingMode.HALF_UP))
                         .append(")\n\n");
             }
         }
