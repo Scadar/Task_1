@@ -1,5 +1,7 @@
 package ru.scadarnull.entity;
 
+import ru.scadarnull.service.DepartmentService;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
@@ -35,7 +37,7 @@ public class Department{
     }
 
     public BigDecimal getAvgSalaryOfEmployees(){
-        return getAvgOfGroup(employees);
+        return DepartmentService.avgOfGroup(employees);
     }
 
     public List<List<Employee>> getGroupsReadyToTransfer(){
@@ -56,7 +58,7 @@ public class Department{
             List<List<Employee>> groupsReadyToTransfer)
     {
         if (length == 0) {
-            if(getAvgOfGroup(result).compareTo(getAvgSalaryOfEmployees()) <= 0){
+            if(DepartmentService.avgOfGroup(result).compareTo(getAvgSalaryOfEmployees()) <= 0){
                 groupsReadyToTransfer.add(new ArrayList<>(result));
             }
         } else {
@@ -67,11 +69,4 @@ public class Department{
         }
     }
 
-    private BigDecimal getAvgOfGroup(List<Employee> group) {
-        BigDecimal sum = new BigDecimal(0);
-        for(Employee e : group){
-            sum = sum.add(e.getSalary());
-        }
-        return sum.divide(BigDecimal.valueOf(group.size()), 2, RoundingMode.HALF_UP);
-    }
 }

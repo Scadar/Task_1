@@ -103,7 +103,7 @@ public class DepartmentService {
         }
     }
 
-    private BigDecimal avgOfGroup(List<Employee> group){
+    public static BigDecimal avgOfGroup(List<Employee> group){
         BigDecimal sum = new BigDecimal(0);
         for(Employee e : group){
             sum = sum.add(e.getSalary());

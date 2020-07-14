@@ -29,7 +29,7 @@ public class App
 
             System.out.println(departmentService.groupCheckEmployeeTransfer());
             if(!employeeService.saveGroupsToFile()){
-                System.out.println("Файл для записи не найден");
+                System.out.println("Файл для записи не найден и не может быть создан");
             }
             //departmentService.checkEmployeeTransfer();
         }
