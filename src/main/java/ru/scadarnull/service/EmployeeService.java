@@ -136,11 +136,12 @@ public class EmployeeService {
         }
         return true;
     }
+    private enum ErrorStatus {
+        INVALID_NAME,
+        INVALID_SALARY,
+        INVALID_DEPARTMENT,
+        INVALID_NUMBER_OF_ARGS
+    }
 }
 
-enum ErrorStatus {
-    INVALID_NAME,
-    INVALID_SALARY,
-    INVALID_DEPARTMENT,
-    INVALID_NUMBER_OF_ARGS
-}
+
